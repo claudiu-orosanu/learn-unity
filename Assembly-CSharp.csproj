@@ -56,6 +56,7 @@
      <Compile Include="Assets\EnumExample.cs" />
      <Compile Include="Assets\GenericMethodExample.cs" />
      <Compile Include="Assets\SampleScript.cs" />
+     <Compile Include="Assets\Scripts\CoroutineSceneController.cs" />
      <Compile Include="Assets\Scripts\SceneController.cs" />
      <Compile Include="Assets\Scripts\Shape.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
