@@ -7,12 +7,15 @@ public class SceneController : MonoBehaviour
     public List<Shape> gameShapes;
     public Dictionary<string, Shape> shapesDict;
     public Queue<Shape> shapeQueue;
+    public Stack<Shape> shapeStack;
 
     // Start is called before the first frame update
     void Start()
     {
         shapeQueue = new Queue<Shape>();
         shapesDict = new Dictionary<string, Shape>();
+        shapeStack = new Stack<Shape>();
+
         foreach (var shape in gameShapes)
         {
             shapesDict.Add(shape.Name, shape);
@@ -22,6 +25,12 @@ public class SceneController : MonoBehaviour
         shapeQueue.Enqueue(shapesDict["Square"]);
         shapeQueue.Enqueue(shapesDict["Octagon"]);
         shapeQueue.Enqueue(shapesDict["Circle"]);
+
+        shapeStack.Push(shapesDict["Triangle"]);
+        shapeStack.Push(shapesDict["Square"]);
+        shapeStack.Push(shapesDict["Octagon"]);
+        shapeStack.Push(shapesDict["Circle"]);
+
     }
 
     private void SetRedByName(string shapeName)
@@ -34,11 +43,29 @@ public class SceneController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            if (shapeStack.Count > 0)
+            {
+                Shape shape = shapeStack.Pop();
+                shape.SetColor(Color.green);
+            }
+            else
+            {
+                Debug.Log("The shape stack is empty!");
+            }
+        }
+    }
+
+    private void DequeueExample()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
             if (shapeQueue.Count > 0)
             {
                 Shape shape = shapeQueue.Dequeue();
                 shape.SetColor(Color.blue);
-            } else {
+            }
+            else
+            {
                 Debug.Log("The shape queue is empty");
             }
         }
