@@ -19,6 +19,7 @@ public class CoroutineSceneController : MonoBehaviour
         {
             // SetShapesRed();
             StartCoroutine(SetShapesBlue());
+            Time.timeScale = 0; // pauses the game
         }
     }
 
@@ -27,7 +28,7 @@ public class CoroutineSceneController : MonoBehaviour
         foreach (var shape in gameShapes)
         {
             shape.SetColor(Color.blue);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSecondsRealtime(2);
         }
     }
 
