@@ -27,7 +27,7 @@ public class CoroutineSceneController : MonoBehaviour
         foreach (var shape in gameShapes)
         {
             shape.SetColor(Color.blue);
-            yield return null;
+            yield return new WaitForSeconds(2);
         }
     }
 
