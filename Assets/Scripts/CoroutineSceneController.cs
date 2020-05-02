@@ -29,7 +29,11 @@ public class CoroutineSceneController : MonoBehaviour
         {
             shape.SetColor(Color.blue);
             yield return new WaitForSecondsRealtime(2);
+            shape.SetColor(Color.white);
         }
+
+        yield return new WaitForSecondsRealtime(1);
+        Debug.Log("I just wasted a realtime second");
     }
 
     private void SetShapesRed()
