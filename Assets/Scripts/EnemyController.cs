@@ -10,16 +10,18 @@ public class EnemyController : Shape, IKillable
         base.Start();
 
         Name = "Enemy";
-        Debug.Log("Enemy spawned!");
+        // Debug.Log("Enemy spawned!");
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoveEnemy();
+        // MoveEnemy(gameSceneController.OutputText);
+        MoveEnemy(InternalOutputText);
+        // a delegate is usually used as as callback function, pass a method reference to a method and when that method finishes it will invoke the callback
     }
 
-    private void MoveEnemy()
+    private void MoveEnemy(TextOutputHandler outputHandler)
     {
         transform.Translate(Vector2.down * Time.deltaTime, Space.World);
 
@@ -27,8 +29,14 @@ public class EnemyController : Shape, IKillable
 
         if (bottom <= -gameSceneController.screenBounds.y)
         {
+            outputHandler("Enemy at bottom");
             gameSceneController.KillObject(this);
         }
+    }
+
+    private void InternalOutputText(string text)
+    {
+        Debug.Log($"{text} output by EnemyController");
     }
 
     public void Kill()

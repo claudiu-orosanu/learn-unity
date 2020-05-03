@@ -42,7 +42,7 @@ public class PlayerController : Shape
 
             float limit = Mathf.Clamp(horizontalMovement, left, right);
 
-            Debug.Log($"transform.position = {transform.position}");
+            // Debug.Log($"transform.position = {transform.position}");
             transform.position = new Vector2(limit, transform.position.y);
             // Debug.Log($"horizontalMovement = {horizontalMovement}. transform.position = {transform.position}");
 

@@ -14,7 +14,7 @@ public class ProjectileController : Shape, IKillable
 
         Name = "Projectile";
         SetColor(0, 255, 0);
-        Debug.Log("Projectile spawned!");
+        // Debug.Log("Projectile spawned!");
     }
 
     // Update is called once per frame
