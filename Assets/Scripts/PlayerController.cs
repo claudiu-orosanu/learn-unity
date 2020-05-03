@@ -5,12 +5,11 @@ using UnityEngine;
 public class PlayerController : Shape
 {
     public ProjectileController projectilePrefab;
-    private GameSceneController gameSceneController;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameSceneController = FindObjectOfType<GameSceneController>();
+        base.Start();
         SetColor(Color.yellow);
     }
 
@@ -36,11 +35,15 @@ public class PlayerController : Shape
             // Debug.Log($"deltaTime = {Time.deltaTime}. transformPositionX = {transform.position.x}");
             horizontalMovement = horizontalMovement * Time.deltaTime * gameSceneController.playerSpeed;
             // obs: player speed can be change while playing from Unity inspector because it's public on GameSceneController
-
             horizontalMovement += transform.position.x;
 
+            float right = gameSceneController.screenBounds.x - halfWidth;
+            float left = -right;
+
+            float limit = Mathf.Clamp(horizontalMovement, left, right);
+
             Debug.Log($"transform.position = {transform.position}");
-            transform.position = new Vector2(horizontalMovement, transform.position.y);
+            transform.position = new Vector2(limit, transform.position.y);
             // Debug.Log($"horizontalMovement = {horizontalMovement}. transform.position = {transform.position}");
 
         }
