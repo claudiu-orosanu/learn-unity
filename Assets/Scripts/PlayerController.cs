@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : Shape
 {
+    private ProjectileController projectilePrefab;
     private GameSceneController gameSceneController;
 
     // Start is called before the first frame update
@@ -17,6 +18,11 @@ public class PlayerController : Shape
     void Update()
     {
         MovePlayer();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            FireProjectile();
+        }
     }
 
     private void MovePlayer()
@@ -38,5 +44,17 @@ public class PlayerController : Shape
             // Debug.Log($"horizontalMovement = {horizontalMovement}. transform.position = {transform.position}");
 
         }
+    }
+
+    private void FireProjectile()
+    {
+        Vector2 spawnPosition = transform.position;
+
+        // creates an instance of the object based on a prefab
+        ProjectileController projectileController =
+            Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
+
+        projectileController.projectileSpeed = 2;
+        projectileController.projectileDirection = Vector2.up;
     }
 }
