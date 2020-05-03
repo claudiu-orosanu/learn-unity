@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void EnemyEscapedHandler(EnemyController enemy);
+
 public class EnemyController : Shape, IKillable
 {
+    public event EnemyEscapedHandler EnemyEscaped;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -29,8 +33,13 @@ public class EnemyController : Shape, IKillable
 
         if (bottom <= -gameSceneController.screenBounds.y)
         {
-            outputHandler("Enemy at bottom");
-            gameSceneController.KillObject(this);
+            // outputHandler("Enemy at bottom");
+            // gameSceneController.KillObject(this);
+            if (EnemyEscaped != null)
+            {
+                // event has subscribers
+                EnemyEscaped(this);
+            }
         }
     }
 

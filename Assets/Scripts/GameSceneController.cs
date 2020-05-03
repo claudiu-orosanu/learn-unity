@@ -33,7 +33,8 @@ public class GameSceneController : MonoBehaviour
             float horizontalPosition = Random.Range(-screenBounds.x, screenBounds.x);
             Vector2 spawnPosition = new Vector2(horizontalPosition, screenBounds.y);
 
-            Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            EnemyController enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            enemy.EnemyEscaped += EnemyEscapedHandler;
 
             yield return wait;
         }
@@ -51,6 +52,12 @@ public class GameSceneController : MonoBehaviour
     {
         // Debug.LogWarning($"{killable.GetName()} was killed by gameSceneController");
         killable.Kill();
+    }
+
+    private void EnemyEscapedHandler(EnemyController enemyController)
+    {
+        Destroy(enemyController.gameObject);
+        Debug.Log("Enemy escaped!");
     }
 
     public void OutputText(string text)
