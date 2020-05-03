@@ -6,6 +6,8 @@ public class CoroutineSceneController : MonoBehaviour
 {
     public List<Shape> gameShapes;
 
+    private Coroutine countToNumberCoroutine;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,10 +19,16 @@ public class CoroutineSceneController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(CountToNumber(25000));
+            countToNumberCoroutine = StartCoroutine(CountToNumber(25000));
             StartCoroutine(SetShapesBlue());
             // Time.timeScale = 0; // pauses the game
             Debug.Log("Keypress complete.");
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            // StopAllCoroutines();
+            StopCoroutine(countToNumberCoroutine);
         }
     }
 
@@ -48,6 +56,8 @@ public class CoroutineSceneController : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(1);
         Debug.Log("I just wasted a realtime second");
+
+        yield return SetShapesBlue();
     }
 
     private void SetShapesRed()
