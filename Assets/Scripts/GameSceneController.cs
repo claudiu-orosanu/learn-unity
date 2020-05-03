@@ -10,9 +10,13 @@ public class GameSceneController : MonoBehaviour
     public Vector3 screenBounds;
     public EnemyController enemyPrefab;
 
+    private int _totalScore;
+    private HUDController _hudController;
+
     // Start is called before the first frame update
     void Start()
     {
+        _hudController = FindObjectOfType<HUDController>();
         playerSpeed = 10;
         screenBounds = GetScreenBounds();
         StartCoroutine(SpawnEnemies());
@@ -35,9 +39,16 @@ public class GameSceneController : MonoBehaviour
 
             EnemyController enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
             enemy.EnemyEscaped += EnemyEscapedHandler;
+            enemy.EnemyKilled += EnemyKilledHandler;
 
             yield return wait;
         }
+    }
+
+    private void EnemyKilledHandler(int pointValue)
+    {
+        _totalScore += pointValue;
+        _hudController.scoreText.text = _totalScore.ToString();
     }
 
     private Vector3 GetScreenBounds()
