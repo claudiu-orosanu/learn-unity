@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileController : Shape
+public class ProjectileController : Shape, IKillable
 {
     public Vector2 projectileDirection;
     public float projectileSpeed;
@@ -12,6 +12,7 @@ public class ProjectileController : Shape
     {
         base.Start();
 
+        Name = "Projectile";
         SetColor(0, 255, 0);
         Debug.Log("Projectile spawned!");
     }
@@ -30,7 +31,17 @@ public class ProjectileController : Shape
         
         if (top >= gameSceneController.screenBounds.y)
         {
-            Destroy(gameObject);
+            gameSceneController.KillObject(this);
         }
+    }
+
+    public void Kill()
+    {
+        Destroy(gameObject);
+    }
+
+    public string GetName()
+    {
+        return Name;
     }
 }
