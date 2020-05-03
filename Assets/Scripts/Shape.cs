@@ -10,7 +10,7 @@ public class Shape : MonoBehaviour
     protected float halfHeight;
     private SpriteRenderer spriteRenderer;
 
-    protected void Start()
+    protected virtual void Start()
     {
         gameSceneController = FindObjectOfType<GameSceneController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
