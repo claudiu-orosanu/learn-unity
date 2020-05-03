@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\CoroutineSceneController.cs" />
      <Compile Include="Assets\Scripts\EnemyController.cs" />
      <Compile Include="Assets\Scripts\GameSceneController.cs" />
+     <Compile Include="Assets\Scripts\HUDController.cs" />
      <Compile Include="Assets\Scripts\IKillable.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\ProjectileController.cs" />
