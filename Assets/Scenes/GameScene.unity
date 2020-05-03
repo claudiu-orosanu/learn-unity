@@ -143,6 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 50
   screenBounds: {x: 0, y: 0, z: 0}
+  enemyPrefab: {fileID: 3923539114297140664, guid: f5a49c90239d0a94fb26410e03a66a6b,
+    type: 3}
 --- !u!4 &431473718
 Transform:
   m_ObjectHideFlags: 0

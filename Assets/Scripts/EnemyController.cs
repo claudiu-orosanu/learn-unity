@@ -13,6 +13,11 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        MoveEnemy();
+    }
+
+    private void MoveEnemy()
+    {
+        transform.Translate(Vector2.down * Time.deltaTime, Space.World);
     }
 }
