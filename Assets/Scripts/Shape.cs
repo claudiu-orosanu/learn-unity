@@ -23,4 +23,10 @@ public class Shape : MonoBehaviour
     {
         spriteRenderer.color = newColor;
     }
+
+    public void SetColor(float red, float green, float blue)
+    {
+        Color newColor = new Color(red, green, blue);
+        spriteRenderer.color = newColor;
+    }
 }

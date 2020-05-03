@@ -12,6 +12,7 @@ public class ProjectileController : Shape
     {
         base.Start();
 
+        SetColor(0, 255, 0);
         Debug.Log("Projectile spawned!");
     }
 
