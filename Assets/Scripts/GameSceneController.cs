@@ -6,9 +6,19 @@ public delegate void TextOutputHandler(string text);
 
 public class GameSceneController : MonoBehaviour
 {
+    [Header("Player settings")]
+    [Space]
+    [Range(5, 20)]
     public float playerSpeed;
+
+    [Header("Screen settings")]
+    [Space]
     public Vector3 screenBounds;
-    public EnemyController enemyPrefab;
+
+    [Header("Prefab")]
+    [Space]
+    [SerializeField] // this attribute exposes the field to Unity editor even if the field is private
+    private EnemyController enemyPrefab;
 
     private int _totalScore;
     private HUDController _hudController;
@@ -19,7 +29,6 @@ public class GameSceneController : MonoBehaviour
     {
         _hudController = FindObjectOfType<HUDController>();
         _player = FindObjectOfType<PlayerController>();
-        playerSpeed = 10;
         screenBounds = GetScreenBounds();
         StartCoroutine(SpawnEnemies());
     }
