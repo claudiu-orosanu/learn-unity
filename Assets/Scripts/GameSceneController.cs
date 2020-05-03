@@ -12,11 +12,13 @@ public class GameSceneController : MonoBehaviour
 
     private int _totalScore;
     private HUDController _hudController;
+    private PlayerController _player;
 
     // Start is called before the first frame update
     void Start()
     {
         _hudController = FindObjectOfType<HUDController>();
+        _player = FindObjectOfType<PlayerController>();
         playerSpeed = 10;
         screenBounds = GetScreenBounds();
         StartCoroutine(SpawnEnemies());
@@ -25,7 +27,14 @@ public class GameSceneController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _player.SetColor(Color.red);
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            _player.SetColor(Color.yellow);
+        }
     }
 
     private IEnumerator SpawnEnemies()
