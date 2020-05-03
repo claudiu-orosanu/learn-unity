@@ -8,15 +8,17 @@ public class HUDController : MonoBehaviour
     public Text scoreText;
     public Text pauseButtonText;
 
-    // Start is called before the first frame update
-    void Start()
+    public void PauseButtonClicked()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (Time.timeScale > 0)
+        {
+            Time.timeScale = 0;
+            pauseButtonText.text = "Resume";
+        }
+        else
+        {
+            Time.timeScale = 1;
+            pauseButtonText.text = "Pause";
+        }
     }
 }
