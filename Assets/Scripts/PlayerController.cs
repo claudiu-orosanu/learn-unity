@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : Shape
 {
-    private ProjectileController projectilePrefab;
+    public ProjectileController projectilePrefab;
     private GameSceneController gameSceneController;
 
     // Start is called before the first frame update

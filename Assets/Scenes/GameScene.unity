@@ -332,3 +332,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: 
+  projectilePrefab: {fileID: 4450715874724194611, guid: 6a198a50d464bc04186d75aadefeda75,
+    type: 3}
