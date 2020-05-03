@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\ProjectileController.cs" />
     <Compile Include="Assets\Scripts\SceneController.cs" />
     <Compile Include="Assets\Scripts\Shape.cs" />
+    <Compile Include="Assets\Scripts\StopController.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Downloads/unity-playground/BeyondTheBasics/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
