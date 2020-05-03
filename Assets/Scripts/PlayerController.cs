@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class PlayerController : Shape
 {
+    private GameSceneController gameSceneController;
+
     // Start is called before the first frame update
     void Start()
     {
+        gameSceneController = FindObjectOfType<GameSceneController>();
         SetColor(Color.yellow);
     }
 
@@ -25,7 +28,9 @@ public class PlayerController : Shape
         if (Mathf.Abs(horizontalMovement) > Mathf.Epsilon) // comparing to Epsilon to account for floating point precision errors
         {
             // Debug.Log($"deltaTime = {Time.deltaTime}. transformPositionX = {transform.position.x}");
-            horizontalMovement = horizontalMovement * Time.deltaTime;
+            horizontalMovement = horizontalMovement * Time.deltaTime * gameSceneController.playerSpeed;
+            // obs: player speed can be change while playing from Unity inspector because it's public on GameSceneController
+
             horizontalMovement += transform.position.x;
 
             Debug.Log($"transform.position = {transform.position}");
