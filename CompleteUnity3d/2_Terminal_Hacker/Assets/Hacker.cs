@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 // core loop of this game
 public enum GameState
@@ -22,6 +23,11 @@ public class Hacker : MonoBehaviour
 {
     public GameState currentState;
     public GameDifficulty difficulty;
+    public string password;
+
+    private readonly string[] _easyPasswords = {"cat", "dog", "bird", "cool"};
+    private readonly string[] _mediumPasswords = {"kitchen", "laptop", "window"};
+    private readonly string[] _hardPasswords = {"astronaut", "restaurant", "intermediate", "perpetrator"};
 
     // Start is called before the first frame update
     void Start()
@@ -84,17 +90,7 @@ public class Hacker : MonoBehaviour
 
     private bool IsAnswerCorrect(string userAnswer)
     {
-        switch (difficulty)
-        {
-            case GameDifficulty.Easy:
-                return userAnswer == "cat";
-            case GameDifficulty.Medium:
-                return userAnswer == "kitchen";
-            case GameDifficulty.Hard:
-                return userAnswer == "restaurant";
-            default:
-                return false;
-        }
+        return userAnswer == password;
     }
 
     private void ShowWinScreen()
@@ -119,7 +115,25 @@ public class Hacker : MonoBehaviour
     private void StartGame()
     {
         currentState = GameState.Playing;
+        SetPassword();
         Terminal.ClearScreen();
-        Terminal.WriteLine("Guess the password!");
+        Terminal.WriteLine($"Guess the password! (Hint: {password.Anagram()})");
+    }
+
+    private void SetPassword()
+    {
+        switch (difficulty)
+        {
+            case GameDifficulty.Easy:
+                password = _easyPasswords[Random.Range(0, _easyPasswords.Length)];
+                break;
+            case GameDifficulty.Medium:
+                password = _mediumPasswords[Random.Range(0, _mediumPasswords.Length)];
+                break;
+            case GameDifficulty.Hard:
+                password = _hardPasswords[Random.Range(0, _hardPasswords.Length)];
+                break;
+        }
+
     }
 }
