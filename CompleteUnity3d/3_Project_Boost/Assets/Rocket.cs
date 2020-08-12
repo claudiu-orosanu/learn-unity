@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
-    public float acceleration = 1000f;
+    [SerializeField] private float mainThrust = 1000f;
+    [SerializeField] private float rcsThrust = 100f;
 
     private Rigidbody _rigidbody;
     private AudioSource _audioSource;
@@ -44,7 +45,7 @@ public class Rocket : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             // print("Thrusting!");
-            _rigidbody.AddRelativeForce(Vector3.up * (Time.deltaTime * acceleration));
+            _rigidbody.AddRelativeForce(Vector3.up * (Time.deltaTime * mainThrust));
             // _rigidbody.AddRelativeTorque(Vector3.up * (Time.deltaTime * acceleration));
 
             _audioSource.UnPause();
@@ -60,15 +61,18 @@ public class Rocket : MonoBehaviour
         // take manual control of rotation
         _rigidbody.freezeRotation = true;
 
+        // calculate rotation in this frame
+        float rotationThisFrame = Time.deltaTime * rcsThrust;
+        
         if (Input.GetKey(KeyCode.A))
         {
             // print("Rotating left");
-            transform.Rotate(Vector3.forward);
+            transform.Rotate(Vector3.forward * rotationThisFrame);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            print("Rotating right");
-            transform.Rotate(Vector3.back);
+            // print("Rotating right");
+            transform.Rotate(Vector3.back * rotationThisFrame);
         }
 
         // resume physics control of rotation
