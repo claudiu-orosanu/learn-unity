@@ -57,6 +57,9 @@ public class Rocket : MonoBehaviour
 
     private void Rotate()
     {
+        // take manual control of rotation
+        _rigidbody.freezeRotation = true;
+
         if (Input.GetKey(KeyCode.A))
         {
             // print("Rotating left");
@@ -67,5 +70,8 @@ public class Rocket : MonoBehaviour
             print("Rotating right");
             transform.Rotate(Vector3.back);
         }
+
+        // resume physics control of rotation
+        _rigidbody.freezeRotation = false;
     }
 }
