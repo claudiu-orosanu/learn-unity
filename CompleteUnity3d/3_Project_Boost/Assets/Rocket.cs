@@ -34,6 +34,21 @@ public class Rocket : MonoBehaviour
         ProcessInput();
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+        switch (other.gameObject.tag)
+        {
+            case "Friendly":
+                // do nothing
+                Debug.Log("Ok");
+                break;
+            default:
+                Debug.Log("Dead");
+                Destroy(gameObject);
+                break;
+        }
+    }
+
     private void ProcessInput()
     {
         Thrust();
@@ -63,7 +78,7 @@ public class Rocket : MonoBehaviour
 
         // calculate rotation in this frame
         float rotationThisFrame = Time.deltaTime * rcsThrust;
-        
+
         if (Input.GetKey(KeyCode.A))
         {
             // print("Rotating left");
