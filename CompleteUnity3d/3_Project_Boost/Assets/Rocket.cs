@@ -42,6 +42,9 @@ public class Rocket : MonoBehaviour
                 // do nothing
                 Debug.Log("Ok");
                 break;
+            case "Finish":
+                Debug.Log("Won level!");
+                break;
             default:
                 Debug.Log("Dead");
                 Destroy(gameObject);
