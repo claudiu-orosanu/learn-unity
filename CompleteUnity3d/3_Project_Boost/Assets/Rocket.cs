@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
@@ -44,10 +45,12 @@ public class Rocket : MonoBehaviour
                 break;
             case "Finish":
                 Debug.Log("Won level!");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 break;
             default:
                 Debug.Log("Dead");
-                Destroy(gameObject);
+                // Destroy(gameObject);
+                SceneManager.LoadScene(0);
                 break;
         }
     }
