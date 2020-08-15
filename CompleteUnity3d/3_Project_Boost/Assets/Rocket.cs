@@ -13,6 +13,15 @@ public class Rocket : MonoBehaviour
     private Rigidbody _rigidbody;
     private AudioSource _audioSource;
 
+    private enum GameState
+    {
+        Alive,
+        Transcending,
+        Dead
+    };
+
+    private GameState _gameState = GameState.Alive;
+
     //     void Awake () {
 //        // set frame rate to check Time.deltaTime works
 // #if UNITY_EDITOR
@@ -32,11 +41,20 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ProcessInput();
+        if (_gameState == GameState.Alive)
+        {
+            ProcessThrustInput();
+            ProcessRotateInput();
+        }
     }
 
     private void OnCollisionEnter(Collision other)
     {
+        if (_gameState != GameState.Alive)
+        {
+            return;
+        }
+
         switch (other.gameObject.tag)
         {
             case "Friendly":
@@ -45,29 +63,40 @@ public class Rocket : MonoBehaviour
                 break;
             case "Finish":
                 Debug.Log("Won level!");
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                _gameState = GameState.Transcending;
+                Invoke("LoadNextLevel", 1f);
                 break;
             default:
                 Debug.Log("Dead");
-                // Destroy(gameObject);
-                SceneManager.LoadScene(0);
+                _gameState = GameState.Dead;
+                Invoke("LoadFirstLevel", 2f);
                 break;
         }
     }
 
-    private void ProcessInput()
+    private void LoadNextLevel()
     {
-        Thrust();
-        Rotate();
+        if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
+        {
+            Debug.Log("Won game!! Congratulations!");
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
-    private void Thrust()
+    private void LoadFirstLevel()
+    {
+        SceneManager.LoadScene(0);
+        _gameState = GameState.Alive;
+    }
+
+    private void ProcessThrustInput()
     {
         if (Input.GetKey(KeyCode.W))
         {
-            // print("Thrusting!");
-            _rigidbody.AddRelativeForce(Vector3.up * (Time.deltaTime * mainThrust));
-            // _rigidbody.AddRelativeTorque(Vector3.up * (Time.deltaTime * acceleration));
+            ApplyThrust();
 
             _audioSource.UnPause();
         }
@@ -77,7 +106,13 @@ public class Rocket : MonoBehaviour
         }
     }
 
-    private void Rotate()
+    private void ApplyThrust()
+    {
+        _rigidbody.AddRelativeForce(Vector3.up * (Time.deltaTime * mainThrust));
+        // _rigidbody.AddRelativeTorque(Vector3.up * (Time.deltaTime * acceleration));
+    }
+
+    private void ProcessRotateInput()
     {
         // take manual control of rotation
         _rigidbody.freezeRotation = true;
