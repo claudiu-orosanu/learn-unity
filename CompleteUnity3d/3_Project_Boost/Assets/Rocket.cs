@@ -9,6 +9,9 @@ public class Rocket : MonoBehaviour
 {
     [SerializeField] private float mainThrust = 1000f;
     [SerializeField] private float rcsThrust = 100f;
+    [SerializeField] private AudioClip mainEngine;
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private AudioClip successSound;
 
     private Rigidbody _rigidbody;
     private AudioSource _audioSource;
@@ -35,7 +38,6 @@ public class Rocket : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _audioSource = GetComponent<AudioSource>();
-        _audioSource.Play();
     }
 
     // Update is called once per frame
@@ -62,16 +64,42 @@ public class Rocket : MonoBehaviour
                 Debug.Log("Ok");
                 break;
             case "Finish":
-                Debug.Log("Won level!");
-                _gameState = GameState.Transcending;
-                Invoke("LoadNextLevel", 1f);
+                StartSuccessSequence();
                 break;
             default:
-                Debug.Log("Dead");
-                _gameState = GameState.Dead;
-                Invoke("LoadFirstLevel", 2f);
+                StartDeathSequence();
                 break;
         }
+    }
+
+    private void StartSuccessSequence()
+    {
+        Debug.Log("Won level!");
+
+        // change game state
+        _gameState = GameState.Transcending;
+
+        // play success sound
+        _audioSource.Stop();
+        _audioSource.PlayOneShot(successSound);
+
+        // schedule loading of next level
+        Invoke(nameof(LoadNextLevel), 1f);
+    }
+
+    private void StartDeathSequence()
+    {
+        Debug.Log("Dead");
+
+        // change game state
+        _gameState = GameState.Dead;
+
+        // play success sound
+        _audioSource.Stop();
+        _audioSource.PlayOneShot(deathSound);
+
+        // schedule loading of first level
+        Invoke(nameof(LoadFirstLevel), 2f);
     }
 
     private void LoadNextLevel()
@@ -98,11 +126,14 @@ public class Rocket : MonoBehaviour
         {
             ApplyThrust();
 
-            _audioSource.UnPause();
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.PlayOneShot(mainEngine);
+            }
         }
         else
         {
-            _audioSource.Pause();
+            _audioSource.Stop();
         }
     }
 

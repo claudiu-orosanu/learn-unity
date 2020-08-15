@@ -286,6 +286,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainThrust: 2000
   rcsThrust: 200
+  mainEngine: {fileID: 8300000, guid: 66048f021d42d2b45ac1a70d598069d1, type: 3}
+  deathSound: {fileID: 8300000, guid: be723a17b9780cf4caf51b25c6db1cab, type: 3}
+  successSound: {fileID: 8300000, guid: d313261beb1c8ef4e8456ef86c20acdc, type: 3}
 --- !u!1 &1050006152673234196
 GameObject:
   m_ObjectHideFlags: 0
