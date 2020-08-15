@@ -12,6 +12,9 @@ public class Rocket : MonoBehaviour
     [SerializeField] private AudioClip mainEngine;
     [SerializeField] private AudioClip deathSound;
     [SerializeField] private AudioClip successSound;
+    [SerializeField] private ParticleSystem jetParticles;
+    [SerializeField] private ParticleSystem successParticles;
+    [SerializeField] private ParticleSystem explosionParticles;
 
     private Rigidbody _rigidbody;
     private AudioSource _audioSource;
@@ -83,6 +86,8 @@ public class Rocket : MonoBehaviour
         _audioSource.Stop();
         _audioSource.PlayOneShot(successSound);
 
+        successParticles.Play();
+
         // schedule loading of next level
         Invoke(nameof(LoadNextLevel), 1f);
     }
@@ -96,7 +101,11 @@ public class Rocket : MonoBehaviour
 
         // play success sound
         _audioSource.Stop();
-        _audioSource.PlayOneShot(deathSound);
+        _audioSource.PlayOneShot(deathSound, 0.2f);
+
+        // show explosion
+        jetParticles.Stop();
+        explosionParticles.Play();
 
         // schedule loading of first level
         Invoke(nameof(LoadFirstLevel), 2f);
@@ -126,6 +135,8 @@ public class Rocket : MonoBehaviour
         {
             ApplyThrust();
 
+            jetParticles.Play();
+
             if (!_audioSource.isPlaying)
             {
                 _audioSource.PlayOneShot(mainEngine);
@@ -133,6 +144,7 @@ public class Rocket : MonoBehaviour
         }
         else
         {
+            jetParticles.Stop();
             _audioSource.Stop();
         }
     }
