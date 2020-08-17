@@ -86,6 +86,7 @@ public class Rocket : MonoBehaviour
         _audioSource.Stop();
         _audioSource.PlayOneShot(successSound);
 
+        jetParticles.Stop();
         successParticles.Play();
 
         // schedule loading of next level

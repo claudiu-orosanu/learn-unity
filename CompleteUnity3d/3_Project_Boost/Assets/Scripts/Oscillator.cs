@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +11,10 @@ public class Oscillator : MonoBehaviour
     [SerializeField]
     private Vector3 movementVector;
 
-    [SerializeField] [Range(0,1)]
-    private float movementFactor = 0;
+    [SerializeField]
+    private float period = 2f;
 
-    private bool _isMovingForward = true;
+    private float _movementFactor;
 
     // Start is called before the first frame update
     void Start()
@@ -24,18 +25,15 @@ public class Oscillator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 offset = movementVector * movementFactor;
+        const float tau = 2f * Mathf.PI;
+
+        float cycles = Time.time / period;
+        // if period is 1 then after 1 second, cycles = 1
+        // and Sin(6.28) = 0 (object reaches starting point again)
+        float rawSinWave = Mathf.Sin(cycles * tau);
+
+        _movementFactor = rawSinWave / 2f + 0.5f;
+        Vector3 offset = movementVector * _movementFactor;
         transform.position = _startingPosition + offset;
-
-        if (movementFactor >= 1)
-        {
-            _isMovingForward = false;
-        } else if (movementFactor <= 0)
-        {
-            _isMovingForward = true;
-        }
-
-        float addition = 0.5f * Time.deltaTime;
-        movementFactor += _isMovingForward ? addition : -addition;
     }
 }
