@@ -51,6 +51,11 @@ public class Rocket : MonoBehaviour
             ProcessThrustInput();
             ProcessRotateInput();
         }
+
+        if (Debug.isDebugBuild)
+        {
+            ProcessDebugInput();
+        }
     }
 
     private void OnCollisionEnter(Collision other)
@@ -177,5 +182,18 @@ public class Rocket : MonoBehaviour
 
         // resume physics control of rotation
         _rigidbody.freezeRotation = false;
+    }
+
+    private void ProcessDebugInput()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadNextLevel();
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            _rigidbody.detectCollisions = !_rigidbody.detectCollisions;
+        }
     }
 }

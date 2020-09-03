@@ -6,14 +6,10 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Oscillator : MonoBehaviour
 {
+    [SerializeField] private Vector3 movementVector;
+    [SerializeField] private float period = 2f;
+
     private Vector3 _startingPosition;
-
-    [SerializeField]
-    private Vector3 movementVector;
-
-    [SerializeField]
-    private float period = 2f;
-
     private float _movementFactor;
 
     // Start is called before the first frame update
@@ -25,11 +21,14 @@ public class Oscillator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // protect against division by 0
+        if (Mathf.Approximately(period, 0f)) { return; }
+
         const float tau = 2f * Mathf.PI;
 
         float cycles = Time.time / period;
-        // if period is 1 then after 1 second, cycles = 1
-        // and Sin(6.28) = 0 (object reaches starting point again)
+        /*if period is 1 then after 1 second, cycles = 1
+        and Sin(6.28) = 0 (object reaches starting point again)*/
         float rawSinWave = Mathf.Sin(cycles * tau);
 
         _movementFactor = rawSinWave / 2f + 0.5f;
